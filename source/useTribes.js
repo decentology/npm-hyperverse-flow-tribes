@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Context } from './Provider.jsx';
 
-function useCounter() {
+function useTribes() {
   const context = React.useContext(Context);
   return context;
 }

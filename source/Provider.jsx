@@ -1,48 +1,45 @@
 import React from 'react';
-
-import { useFlow } from '@decentology/hyperverse-flow';
-
-import { useEnvironment } from './environment.js';
+import * as fcl from '@onflow/fcl';
+import {networks, useHyperverse} from '@decentology/hyperverse';
 
 import * as actions from './actions';
-import * as bundle from './bundle';
 
-const Context = React.createContext({});
+const Context = React.createContext(null);
 
 function Provider(props) {
-  const environment = useEnvironment();
-  const flow = useFlow();
+  const [isInitialized, setInitialized] = React.useState(null);
+
+  let { network } = useHyperverse();
+
+  const initialize = async () => {
+    if (network === networks.MainNet) {
+      // TODO: Deploy to Flow Mainnet.
+    } else if (network === networks.TestNet) {
+      // fcl.config()
+      //   .put('0xTribes', 'TO DO');
+    }
+    
+    const TribesAddress = await fcl.config().get('0xTribes');
+    if (typeof TribesAddress !== 'undefined') {
+      setInitialized(true);
+    } else {
+      setInitialized(false);
+    }
+  };
+
+  React.useEffect(() => {
+    initialize();
+  }, []);
 
   const boundActions = {};
-  for (const actionName in actions) {
-    boundActions[actionName] = actions[actionName].bind(
-      null,
-      {
-        environment,
-        flow,
-        account: flow.state.user.addr
-      }
-    );
-  }
-
-  const boundBundle = {};
-  for (const actionName in bundle) {
-    boundBundle[actionName] = bundle[actionName].bind(
-      null,
-      {
-        environment,
-        flow,
-        account: flow.state.user.addr
-      }
-    );
+  for (const actionName of Object.keys(actions)) {
+    boundActions[actionName] = actions[actionName].bind(null, props.tenantID);
   }
 
   return (
     <Context.Provider
       value={{
-        bundle: {
-          ...boundBundle
-        },
+        isInitialized,
         ...boundActions
       }}
     >

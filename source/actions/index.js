@@ -1,3 +1,4 @@
-export {add} from './add.js';
-export {deduct} from './deduct.js';
-export {fetchCount} from './fetchCount.js';
+export {leaveTribe} from './leaveTribe.js';
+export {getAllTribes} from './getAllTribes.js';
+export {joinTribe} from './joinTribe.js';
+export {getCurrentTribe} from './getCurrentTribe.js';

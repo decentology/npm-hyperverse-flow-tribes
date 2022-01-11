@@ -1,6 +1,6 @@
 export {
-  default as useCounter
-} from './useCounter.js';
+  default as useTribes
+} from './Tribes.js';
 
 export {
   Context,
