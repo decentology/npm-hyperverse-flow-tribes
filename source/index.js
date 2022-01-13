@@ -1,6 +1,6 @@
 export {
   default as useTribes
-} from './Tribes.js';
+} from './useTribes.js';
 
 export {
   Context,

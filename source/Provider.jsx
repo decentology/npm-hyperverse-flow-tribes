@@ -15,8 +15,8 @@ function Provider(props) {
     if (network === networks.MainNet) {
       // TODO: Deploy to Flow Mainnet.
     } else if (network === networks.TestNet) {
-      // fcl.config()
-      //   .put('0xTribes', 'TO DO');
+      fcl.config()
+        .put('0xTribes', '0x1960ff14acc51991');
     }
     
     const TribesAddress = await fcl.config().get('0xTribes');
